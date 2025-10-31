@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "postinstall": "npm install --no-save @rollup/rollup-linux-x64-gnu || true",
     "build": "npm run build:client && npm run build:server",
     "build:client": "npx vite build",
     "build:server": "npx vite build --config vite.config.server.ts",

@@ -2,8 +2,9 @@ services:
   - type: web
     name: vortex-verse
     runtime: node
-    # IMPORTANT: Install all dependencies including devDependencies (vite is needed for build)
-    # Set NODE_ENV to development during install to ensure devDependencies are installed
+    # IMPORTANT: Install all dependencies including devDependencies and optional dependencies
+    # Vite/Rollup require platform-specific native binaries (optionalDependencies)
+    # postinstall script in package.json ensures Rollup's optional deps are installed
     buildCommand: NODE_ENV=development npm install && NODE_ENV=production npm run build
     startCommand: npm start
     envVars:
