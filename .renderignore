@@ -1,0 +1,38 @@
+# Render ignore file - files/folders to exclude from deployment
+
+# Development files
+node_modules/
+.vscode/
+.idea/
+*.log
+*.swp
+*.swo
+
+# Build artifacts (will be regenerated)
+dist/
+
+# Environment files (use Render dashboard instead)
+.env
+.env.local
+.env.*.local
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Test files
+**/__tests__/
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Config files
+.editorconfig
+.prettierrc
+.eslintrc*
+
