@@ -15,18 +15,18 @@ const distPath = path.resolve(__dirname, "../spa");
 // Serve static files
 app.use(express.static(distPath));
 
+// Simple health endpoint for container platforms (must be before catch-all)
+app.get("/health", (_req, res) => res.status(200).send("ok"));
+
 // Handle React Router - serve index.html for all non-API routes
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   // Don't serve index.html for API routes
-  if (req.path.startsWith("/api/") || req.path.startsWith("/health")) {
+  if (req.path.startsWith("/api/")) {
     return res.status(404).json({ error: "API endpoint not found" });
   }
 
   res.sendFile(path.join(distPath, "index.html"));
 });
-
-// Simple health endpoint for container platforms
-app.get("/health", (_req, res) => res.status(200).send("ok"));
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`🚀 Fusion Starter server running on port ${port}`);
