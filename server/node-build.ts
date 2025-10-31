@@ -19,13 +19,20 @@ app.use(express.static(distPath));
 app.get("/health", (_req, res) => res.status(200).send("ok"));
 
 // Handle React Router - serve index.html for all non-API routes
-app.get("/*", (req, res) => {
-  // Don't serve index.html for API routes
-  if (req.path.startsWith("/api/")) {
-    return res.status(404).json({ error: "API endpoint not found" });
+// Use middleware instead of route pattern to avoid path-to-regexp issues
+app.use((req, res, next) => {
+  // Skip if it's an API route (already handled by createServer routes)
+  if (req.path.startsWith("/api/") || req.path === "/health") {
+    return next();
   }
 
-  res.sendFile(path.join(distPath, "index.html"));
+  // Skip if the file exists (static files already served)
+  // For all other routes, serve index.html for React Router
+  res.sendFile(path.join(distPath, "index.html"), (err) => {
+    if (err) {
+      next(err);
+    }
+  });
 });
 
 app.listen(port, "0.0.0.0", () => {
