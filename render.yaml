@@ -2,9 +2,9 @@ services:
   - type: web
     name: vortex-verse
     runtime: node
-    # Ensure devDependencies are installed for build (vite is needed)
-    # npm install will install all deps including devDependencies by default
-    buildCommand: npm install && npm run build
+    # IMPORTANT: Install all dependencies including devDependencies (vite is needed for build)
+    # Set NODE_ENV to development during install to ensure devDependencies are installed
+    buildCommand: NODE_ENV=development npm install && NODE_ENV=production npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
